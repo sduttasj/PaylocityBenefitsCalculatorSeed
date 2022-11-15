@@ -22,11 +22,4 @@ standards and approach. There’s no right or wrong answer.  It’s more about h
 problem. We’re looking to see your skills in all three tiers so the solution can be used as a conversation piece
 to show our teams your abilities across the board.
 
-## What are we looking for?
-
-* understanding of business requirements
-* correct implementation of requirements
-* test coverage for the API
-* code/architecture quality
-
-Please document any decisions that you make.
+Requirements will be given separately.
