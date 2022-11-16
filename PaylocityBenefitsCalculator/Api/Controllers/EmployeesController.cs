@@ -21,7 +21,7 @@ namespace Api.Controllers
         [HttpGet("")]
         public async Task<ActionResult<ApiResponse<List<GetEmployeeDto>>>> GetAll()
         {
-            //todo: use a more realistic production approach
+            //task: use a more realistic production approach
             var employees = new List<GetEmployeeDto>
             {
                 new()
