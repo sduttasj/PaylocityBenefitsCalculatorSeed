@@ -11,6 +11,6 @@ CREATE TABLE [sample].[dbo].[Dependent](
 Id int PRIMARY KEY,
 FirstName varchar(50) NULL,
 LastName varchar(50) NULL,
-EmployeeId int NOT NULL FOREIGN KEY REFERENCES Employee1(Id),
+EmployeeId int NOT NULL FOREIGN KEY REFERENCES Employee(Id),
 DateOfBirth datetime NOT NULL, 
 Relationship varchar(50) NOT NULL);
