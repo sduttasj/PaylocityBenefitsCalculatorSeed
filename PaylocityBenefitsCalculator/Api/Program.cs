@@ -1,10 +1,23 @@
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+using AutoMapper;
+using Api.Interface;
+using Api.Repository;
+using Api.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles); 
+//builder.Services.AddDbContext<EmployeeContext>(options => options.UseInMemoryDatabase("EmployeesDBIM"));
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IDependentRepository, DependentRepository>();
+builder.Services.AddScoped<IPaycheck, Paycheck>();
 
-builder.Services.AddControllers();
+builder.Services.AddDbContext<SampleContext>(c => c.UseSqlServer(builder.Configuration.GetConnectionString("SampleDatabase")));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => {
@@ -23,7 +36,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: allowLocalhost,
         policy  =>
         {
-            policy.WithOrigins("http://localhost:3000", "http://localhost");
+            policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000", "http://localhost");
         });
 });
 
@@ -39,6 +52,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors(allowLocalhost);
 
 app.UseHttpsRedirection();
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseAuthorization();
 
